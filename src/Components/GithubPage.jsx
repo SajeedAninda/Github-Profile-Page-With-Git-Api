@@ -2,6 +2,9 @@ import React from 'react';
 import headerImage from "../assets/header.png";
 import searchIcon from "../assets/Search.svg";
 import profileImg from "../assets/87448831.jpg";
+import chieldIcon from "../assets/Chield_alt.svg";
+import nestingIcon from "../assets/Nesting.svg";
+import starIcon from "../assets/Star.svg";
 
 
 const GithubPage = () => {
@@ -80,6 +83,44 @@ const GithubPage = () => {
                         <h3 className='text-[16px] font-bold text-[#4A5567]'>
                             Hi i am Sajeed, A MERN Stack developer. Crafting bridges between design and functionality. Let's build innovative, user-focused web applications together!
                         </h3>
+                    </div>
+
+                    <div className="repos grid grid-cols-2 gap-6 mt-6">
+                        <div className="repoCard h-[167px] bg-gradient-to-r from-[#111729] to-[#1D1B48] rounded-xl p-4">
+                            <h3 className='text-[20px] font-semibold text-[#CDD5E0]'>
+                                Advice Generator App
+                            </h3>
+                            <h3 className='text-[16px] text-[#97a2b4] mt-2'>
+                                React Application created with the Advice Slip Api
+                            </h3>
+
+                            <div className='mt-4 flex justify-start items-center gap-4'>
+                                <div className='flex items-center gap-2'>
+                                    <img src={chieldIcon} alt="" />
+                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                        MIT
+                                    </h4>
+                                </div>
+
+                                <div className='flex items-center gap-2'>
+                                    <img src={nestingIcon} alt="" />
+                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                        3
+                                    </h4>
+                                </div>
+
+                                <div className='flex items-center gap-2'>
+                                    <img src={starIcon} alt="" />
+                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                        2
+                                    </h4>
+                                </div>
+
+                                <h5 className='text-[12px] font-semibold text-[#97a2b4]'>
+                                    Updated about 2 months ago
+                                </h5>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
