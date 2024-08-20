@@ -1,8 +1,10 @@
+import GithubPage from "./Components/GithubPage"
+
 function App() {
 
   return (
     <>
-
+      <GithubPage></GithubPage>
     </>
   )
 }
