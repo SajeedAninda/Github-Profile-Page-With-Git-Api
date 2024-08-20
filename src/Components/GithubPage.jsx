@@ -72,6 +72,15 @@ const GithubPage = () => {
                             </div>
                         </div>
                     </div>
+
+                    <div className='name&bio mt-8'>
+                        <h1 className='text-[32px] font-bold text-[#CDD5E0]'>
+                            Sajeed Enayet Aninda
+                        </h1>
+                        <h3 className='text-[16px] font-bold text-[#4A5567]'>
+                            Hi i am Sajeed, A MERN Stack developer. Crafting bridges between design and functionality. Let's build innovative, user-focused web applications together!
+                        </h3>
+                    </div>
                 </div>
             </div>
         </div>
