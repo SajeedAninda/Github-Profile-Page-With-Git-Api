@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import headerImage from "../assets/header.png";
 import searchIcon from "../assets/Search.svg";
 import profileImg from "../assets/87448831.jpg";
@@ -8,6 +8,34 @@ import starIcon from "../assets/Star.svg";
 
 
 const GithubPage = () => {
+    let [userData, setUserData] = useState({});
+    let [reposData, setReposData] = useState([]);
+
+    useEffect(() => {
+        fetch('https://api.github.com/users/sajeedaninda')
+            .then(response => response.json())
+            .then(data => {
+                setUserData(data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
+
+    useEffect(() => {
+        fetch('https://api.github.com/users/sajeedaninda/repos')
+            .then(response => response.json())
+            .then(data => {
+                setReposData(data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
+
+    // console.log(userData);
+    console.log(reposData);
+
     return (
         <div>
             <div className='relative upperDiv'>
@@ -22,11 +50,11 @@ const GithubPage = () => {
             </div>
 
 
-            <div className='bottomDiv h-fit lg:h-screen bg-[#20293A] relative'>
+            <div className='bottomDiv h-fit pb-16 bg-[#20293A] relative'>
                 <div className='w-[90%] mx-auto '>
                     <div className="profileInfo flex items-center justify-start">
                         <div className='absolute -top-12'>
-                            <img className='w-[126px] rounded-xl border-8 border-[#20293A]' src={profileImg} alt="" />
+                            <img className='w-[126px] rounded-xl border-8 border-[#20293A]' src={userData?.avatar_url} alt="" />
                         </div>
 
                         <div className='flex flex-col lg:flex-row items-start lg:items-center gap-5 ml-36 mt-4'>
@@ -39,7 +67,7 @@ const GithubPage = () => {
 
                                 <div className='pl-3'>
                                     <p className='text-[#CDD5E0] text-[16px] font-semibold'>
-                                        2
+                                        {userData?.followers}
                                     </p>
                                 </div>
                             </div>
@@ -54,7 +82,7 @@ const GithubPage = () => {
 
                                 <div className='pl-3'>
                                     <p className='text-[#CDD5E0] text-[16px] font-semibold'>
-                                        12
+                                        {userData?.following}
                                     </p>
                                 </div>
                             </div>
@@ -69,7 +97,7 @@ const GithubPage = () => {
 
                                 <div className='pl-3'>
                                     <p className='text-[#CDD5E0] text-[16px] font-semibold'>
-                                        Dhaka, Bangladesh
+                                        {userData?.location}
                                     </p>
                                 </div>
                             </div>
@@ -78,49 +106,54 @@ const GithubPage = () => {
 
                     <div className='name&bio mt-8'>
                         <h1 className='text-[32px] font-bold text-[#CDD5E0]'>
-                            Sajeed Enayet Aninda
+                            {userData?.name}
                         </h1>
                         <h3 className='text-[16px] font-bold text-[#4A5567]'>
-                            Hi i am Sajeed, A MERN Stack developer. Crafting bridges between design and functionality. Let's build innovative, user-focused web applications together!
+                            {userData?.bio}
                         </h3>
                     </div>
 
                     <div className="repos grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                        <div className="repoCard h-[167px] bg-gradient-to-r from-[#111729] to-[#1D1B48] rounded-xl p-4">
-                            <h3 className='text-[20px] font-semibold text-[#CDD5E0]'>
-                                Advice Generator App
-                            </h3>
-                            <h3 className='text-[16px] text-[#97a2b4] mt-2'>
-                                React Application created with the Advice Slip Api
-                            </h3>
+                        {
+                            reposData?.map(repo =>
+                                <div className="repoCard h-[167px] bg-gradient-to-r from-[#111729] to-[#1D1B48] rounded-xl p-4">
+                                    <h3 className='text-[20px] font-semibold text-[#CDD5E0]'>
+                                        {repo?.name}
+                                    </h3>
+                                    <h3 className='text-[16px] text-[#97a2b4] mt-2'>
+                                        {repo?.description}
+                                    </h3>
 
-                            <div className='mt-4 flex justify-start items-center gap-4'>
-                                <div className='flex items-center gap-2'>
-                                    <img src={chieldIcon} alt="" />
-                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
-                                        MIT
-                                    </h4>
+                                    <div className='mt-4 flex justify-start items-center gap-4'>
+                                        <div className='flex items-center gap-2'>
+                                            <img src={chieldIcon} alt="" />
+                                            <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                                MIT
+                                            </h4>
+                                        </div>
+
+                                        <div className='flex items-center gap-2'>
+                                            <img src={nestingIcon} alt="" />
+                                            <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                                {repo?.forks_count}
+                                            </h4>
+                                        </div>
+
+                                        <div className='flex items-center gap-2'>
+                                            <img src={starIcon} alt="" />
+                                            <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                                {repo?.stargazers_count}
+                                            </h4>
+                                        </div>
+
+                                        <h5 className='text-[12px] font-semibold text-[#97a2b4]'>
+                                            Updated about {repo?.updated_at}
+                                        </h5>
+                                    </div>
                                 </div>
 
-                                <div className='flex items-center gap-2'>
-                                    <img src={nestingIcon} alt="" />
-                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
-                                        3
-                                    </h4>
-                                </div>
-
-                                <div className='flex items-center gap-2'>
-                                    <img src={starIcon} alt="" />
-                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
-                                        2
-                                    </h4>
-                                </div>
-
-                                <h5 className='text-[12px] font-semibold text-[#97a2b4]'>
-                                    Updated about 2 months ago
-                                </h5>
-                            </div>
-                        </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
