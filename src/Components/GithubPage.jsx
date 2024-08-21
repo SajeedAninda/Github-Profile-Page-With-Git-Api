@@ -1,40 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import headerImage from "../assets/header.png";
 import searchIcon from "../assets/Search.svg";
-import profileImg from "../assets/87448831.jpg";
 import chieldIcon from "../assets/Chield_alt.svg";
 import nestingIcon from "../assets/Nesting.svg";
 import starIcon from "../assets/Star.svg";
 
-
 const GithubPage = () => {
-    let [userData, setUserData] = useState({});
-    let [reposData, setReposData] = useState([]);
+    const [username, setUsername] = useState('sajeedaninda');
+    const [userData, setUserData] = useState({});
+    const [reposData, setReposData] = useState([]);
 
     useEffect(() => {
-        fetch('https://api.github.com/users/sajeedaninda')
+        fetchUserData();
+        fetchReposData();
+    }, []);
+
+    const fetchUserData = () => {
+        fetch(`https://api.github.com/users/${username}`)
             .then(response => response.json())
             .then(data => {
                 setUserData(data);
             })
             .catch(error => {
-                console.log(error)
-            })
-    }, [])
+                console.log(error);
+            });
+    };
 
-    useEffect(() => {
-        fetch('https://api.github.com/users/sajeedaninda/repos')
+    const fetchReposData = () => {
+        fetch(`https://api.github.com/users/${username}/repos`)
             .then(response => response.json())
             .then(data => {
                 setReposData(data);
             })
             .catch(error => {
-                console.log(error)
-            })
-    }, [])
+                console.log(error);
+            });
+    };
 
-    // console.log(userData);
-    console.log(reposData);
+    const handleSearch = () => {
+        fetchUserData();
+        fetchReposData();
+    };
+
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
 
     return (
         <div>
@@ -44,11 +55,17 @@ const GithubPage = () => {
                 </div>
 
                 <div className='searchBox absolute w-[90%] lg:w-[38%] left-1/2 transform -translate-x-1/2 top-6'>
-                    <input className='w-full rounded-xl py-4 pl-[55px] pr-6 text-[#CDD5E0] bg-[#212a3b] placeholder:text-[#4A5567] font-bold outline-none' placeholder='Username' type="text" />
+                    <input
+                        className='w-full rounded-xl py-4 pl-[55px] pr-6 text-[#CDD5E0] bg-[#212a3b] placeholder:text-[#4A5567] font-bold outline-none'
+                        placeholder='Username'
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
                     <img className='absolute left-4 top-1/2 transform -translate-y-1/2' src={searchIcon} alt="" />
+                    <button onClick={handleSearch} className='hidden'>Search</button>
                 </div>
             </div>
-
 
             <div className='bottomDiv h-fit pb-16 bg-[#20293A] relative'>
                 <div className='w-[90%] mx-auto '>
@@ -72,7 +89,6 @@ const GithubPage = () => {
                                 </div>
                             </div>
 
-
                             <div className='bg-[#111729] px-5 py-4 rounded-xl flex justify-center items-center'>
                                 <div className='pr-3 border-r border-[#4A5567]'>
                                     <p className='text-[#4A5567] text-[16px] font-semibold'>
@@ -86,7 +102,6 @@ const GithubPage = () => {
                                     </p>
                                 </div>
                             </div>
-
 
                             <div className='bg-[#111729] px-5 py-4 rounded-xl flex justify-center items-center'>
                                 <div className='pr-3 border-r border-[#4A5567]'>
@@ -116,12 +131,12 @@ const GithubPage = () => {
                     <div className="repos grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                         {
                             reposData?.map(repo =>
-                                <div className="repoCard h-[167px] bg-gradient-to-r from-[#111729] to-[#1D1B48] rounded-xl p-4">
+                                <div key={repo.id} className="repoCard h-[167px] bg-gradient-to-r from-[#111729] to-[#1D1B48] rounded-xl p-4">
                                     <h3 className='text-[20px] font-semibold text-[#CDD5E0]'>
                                         {repo?.name}
                                     </h3>
                                     <h3 className='text-[16px] text-[#97a2b4] mt-2'>
-                                        {repo?.description}
+                                        {repo?.description || 'No description available'}
                                     </h3>
 
                                     <div className='mt-4 flex justify-start items-center gap-4'>
@@ -147,11 +162,10 @@ const GithubPage = () => {
                                         </div>
 
                                         <h5 className='text-[12px] font-semibold text-[#97a2b4]'>
-                                            Updated about {repo?.updated_at}
+                                            Updated on {formatDate(repo?.updated_at)}
                                         </h5>
                                     </div>
                                 </div>
-
                             )
                         }
                     </div>
