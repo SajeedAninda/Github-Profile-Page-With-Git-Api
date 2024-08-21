@@ -6,7 +6,7 @@ import nestingIcon from "../assets/Nesting.svg";
 import starIcon from "../assets/Star.svg";
 
 const GithubPage = () => {
-    const [username, setUsername] = useState('sajeedaninda');
+    const [username, setUsername] = useState('github');
     const [userData, setUserData] = useState({});
     const [reposData, setReposData] = useState([]);
     const [error, setError] = useState(null);
@@ -106,7 +106,7 @@ const GithubPage = () => {
             <div className='bottomDiv h-fit pb-16 bg-[#20293A] relative'>
                 <div className='w-[90%] mx-auto '>
                     {loading ? (
-                        <p className="text-center h-screen text-[#CDD5E0]">Loading...</p>
+                        <p className="text-center pt-12 text-[24px] font-bold h-screen text-[#CDD5E0]">Loading...</p>
                     ) : error ? (
                         <div className="error-message text-center h-screen pt-12 text-[24px] text-[#FF6B6B] font-bold">
                             {error}
@@ -174,41 +174,43 @@ const GithubPage = () => {
 
                             <div className="repos grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                                 {reposToShow.map(repo =>
-                                    <div key={repo.id} className="repoCard h-[167px] bg-gradient-to-r from-[#111729] to-[#1D1B48] rounded-xl p-4">
-                                        <h3 className='text-[20px] font-semibold text-[#CDD5E0]'>
-                                            {repo?.name}
-                                        </h3>
-                                        <h3 className='text-[16px] text-[#97a2b4] mt-2'>
-                                            {repo?.description || 'No description available'}
-                                        </h3>
+                                    <a href={repo?.html_url} target='_blank'>
+                                        <div key={repo?.id} className="repoCard h-[167px] bg-gradient-to-r from-[#111729] to-[#1D1B48] rounded-xl p-4">
+                                            <h3 className='text-[20px] font-semibold text-[#CDD5E0]'>
+                                                {repo?.name}
+                                            </h3>
+                                            <h3 className='text-[16px] text-[#97a2b4] mt-2'>
+                                                {repo?.description || 'No description available'}
+                                            </h3>
 
-                                        <div className='mt-4 flex justify-start items-center gap-4'>
-                                            <div className='flex items-center gap-2'>
-                                                <img src={chieldIcon} alt="" />
-                                                <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
-                                                    MIT
-                                                </h4>
+                                            <div className='mt-4 flex justify-start items-center gap-4'>
+                                                <div className='flex items-center gap-2'>
+                                                    <img src={chieldIcon} alt="" />
+                                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                                        MIT
+                                                    </h4>
+                                                </div>
+
+                                                <div className='flex items-center gap-2'>
+                                                    <img src={nestingIcon} alt="" />
+                                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                                        {repo?.forks_count}
+                                                    </h4>
+                                                </div>
+
+                                                <div className='flex items-center gap-2'>
+                                                    <img src={starIcon} alt="" />
+                                                    <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
+                                                        {repo?.stargazers_count}
+                                                    </h4>
+                                                </div>
+
+                                                <h5 className='text-[12px] font-semibold text-[#97a2b4]'>
+                                                    Updated on {formatDate(repo?.updated_at)}
+                                                </h5>
                                             </div>
-
-                                            <div className='flex items-center gap-2'>
-                                                <img src={nestingIcon} alt="" />
-                                                <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
-                                                    {repo?.forks_count}
-                                                </h4>
-                                            </div>
-
-                                            <div className='flex items-center gap-2'>
-                                                <img src={starIcon} alt="" />
-                                                <h4 className='text-[16px] font-medium text-[#CDD5E0]'>
-                                                    {repo?.stargazers_count}
-                                                </h4>
-                                            </div>
-
-                                            <h5 className='text-[12px] font-semibold text-[#97a2b4]'>
-                                                Updated on {formatDate(repo?.updated_at)}
-                                            </h5>
                                         </div>
-                                    </div>
+                                    </a>
                                 )}
                             </div>
 
